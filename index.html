@@ -7,12 +7,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
-<title>מערת העטלפים של אורי</title>
+<title>המערה של אורי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&display=swap">
 <style>
-:root{--bg:#1b1726;--stone:#3a3446;--stone2:#4a4358;--em:#3ad17a;--em2:#1f9d55;--gold:#ffcf4a;--paper:#f6f1e4;--ink:#1d2340;--line:#3b4a8c;--text:#fff;}
+:root{--bg:#1b1726;--stone:#3a3446;--stone2:#4a4358;--em:#3ad17a;--em2:#1f9d55;--gold:#ffcf4a;--paper:#f6f1e4;--ink:#1d2340;--line:#3b4a8c;--text:#fff;--fam:#7b5ea7;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Rubik,'Noto Sans Hebrew',Arial,sans-serif}
 body{background:
@@ -32,21 +32,33 @@ button{font-family:inherit;cursor:pointer;border:0}
 .seg{display:flex;border-radius:4px;overflow:hidden;box-shadow:inset 0 0 0 3px #000}
 .seg button{background:var(--stone);color:#fff;font-size:18px;font-weight:700;padding:10px 14px}
 .seg button.on{background:var(--em2)}
+/* family tabs */
+.fams{display:flex;gap:12px;justify-content:center;padding:0 18px 4px;flex:0 0 auto}
+.fam{display:flex;align-items:center;gap:10px;background:var(--stone);color:#fff;font-size:21px;font-weight:800;padding:8px 18px 8px 12px;border-radius:4px;opacity:.7;
+  box-shadow:inset -4px -4px 0 rgba(0,0,0,.35),inset 4px 4px 0 rgba(255,255,255,.08)}
+.fam .ms{width:40px;height:32px}
+.fam .ms svg{width:100%;height:100%}
+.fam.on{opacity:1;background:var(--fc);box-shadow:inset -4px -4px 0 rgba(0,0,0,.35),inset 4px 4px 0 rgba(255,255,255,.18),0 0 0 3px #000}
+.fam small{font-weight:500;opacity:.85;font-size:15px}
 /* home */
-#home .grid{flex:1;display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-content:center;padding:10px 24px 24px}
-.card{width:190px;height:230px;background:var(--stone);border-radius:6px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:10px;color:#fff;
+#home .grid{flex:1;display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-content:center;padding:10px 24px 24px;overflow:auto}
+.card{width:180px;height:220px;background:var(--stone);border-radius:6px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:10px;color:#fff;
   box-shadow:inset -6px -6px 0 rgba(0,0,0,.35),inset 6px 6px 0 rgba(255,255,255,.08),0 6px 0 #000}
-.card .bat{position:absolute;top:0;width:70px;height:56px}
+.card .mascot{position:absolute;top:0;width:70px;height:56px}
 .card .glyph{width:120px;height:120px;background:var(--paper);border-radius:4px;margin-bottom:10px;overflow:hidden}
-.card .glyph svg,.card .bat svg{width:100%;height:100%;display:block}
+.card .glyph svg,.card .mascot svg{width:100%;height:100%;display:block}
 .card .pips{display:flex;gap:6px}
 .card .pip{width:16px;height:16px;background:#221d2c;border-radius:2px}
 .card .pip.on{background:var(--em)}
 .card.done{background:#3d4a3a}
 .card.locked{opacity:.45}
 .card .tag{position:absolute;top:8px;left:8px;font-size:15px;background:#000a;padding:2px 8px;border-radius:3px}
-.card.words{width:400px}
-.card.words .glyph{width:370px}
+.card.words{width:380px}
+.card.words .glyph{width:350px}
+.card.game{background:#5a4326}
+.card.game .glyph{display:flex;align-items:center;justify-content:center;font-size:70px;color:var(--ink)}
+.card .ttl{font-size:20px;font-weight:800;text-shadow:2px 2px 0 #000}
+.rowbreak{flex-basis:100%;height:0}
 /* practice */
 #practice .stagebar{display:flex;gap:6px;align-items:center}
 .stg{font-size:16px;padding:6px 10px;border-radius:3px;background:#0006;color:#bbb}
@@ -63,6 +75,43 @@ button{font-family:inherit;cursor:pointer;border:0}
 #side{position:absolute;bottom:16px;right:16px;display:flex;gap:10px}
 #side button{font-size:22px;padding:10px 14px}
 #modeHint{position:absolute;bottom:20px;left:20px;color:#7a6f5a;font-size:16px;pointer-events:none}
+/* picture game */
+.picwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:0 20px 20px}
+.piccard{position:relative;width:min(300px,40vh);height:min(300px,40vh);background:var(--paper);border-radius:6px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 6px #000,0 0 0 12px #5a4326}
+#picEmoji{font-size:min(170px,23vh);line-height:1}
+#picSay{position:absolute;bottom:-8px;left:-8px;font-size:26px;padding:8px 12px}
+#picWord{font-size:56px;font-weight:800;min-height:68px;text-shadow:3px 3px 0 #000;letter-spacing:2px}
+#picWord .first{color:var(--gold)}
+#picOpts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+#picOpts button{width:110px;height:110px;background:var(--paper);border-radius:5px;padding:4px;box-shadow:0 0 0 4px #000,inset 0 -6px 0 rgba(0,0,0,.15)}
+#picOpts button svg{width:100%;height:100%}
+#picOpts button.wrong{opacity:.25;animation:shake .35s}
+#picOpts button.right{box-shadow:0 0 0 6px var(--em),0 0 0 10px #000}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#picMsg{font-size:26px;font-weight:800;min-height:34px;text-shadow:2px 2px 0 #000;text-align:center}
+#picAct{display:flex;gap:14px;min-height:60px}
+#picAct button{font-size:26px;padding:12px 24px}
+.ppips{display:flex;gap:6px}
+.ppips i{width:18px;height:18px;background:#221d2c;border-radius:2px;display:block}
+.ppips i.on{background:var(--em)}
+.ppips i.cur{background:var(--gold)}
+/* XO */
+.xowrap{flex:1;display:flex;gap:18px;padding:0 18px 18px;min-height:0}
+.xoside{width:260px;display:flex;flex-direction:column;gap:14px}
+.who{background:var(--stone);border-radius:5px;padding:10px;font-size:22px;font-weight:800;box-shadow:inset -4px -4px 0 rgba(0,0,0,.35)}
+.who.turn{box-shadow:0 0 0 4px var(--gold),inset -4px -4px 0 rgba(0,0,0,.35)}
+.who .sc{float:left;font-size:26px}
+.xsel{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.xsel button{width:52px;height:52px;background:var(--paper);border-radius:4px;padding:2px;opacity:.55}
+.xsel button svg{width:100%;height:100%}
+.xsel button.on{opacity:1;box-shadow:0 0 0 4px var(--pc)}
+.xsel button:disabled{opacity:.15}
+#xoTurn{flex:1;background:var(--paper);border-radius:5px;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;text-align:center;padding:10px;min-height:0}
+#xoTurn svg{width:100%;max-height:160px}
+#xoBoard{flex:1;position:relative;min-width:0}
+#xoCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+@media (orientation:portrait){.xowrap{flex-direction:column}.xoside{width:auto;flex-direction:row}.who{flex:1}#xoTurn{max-width:240px}#xoTurn svg{max-height:110px}}
 /* room */
 #room .cave{flex:1;position:relative;margin:0 14px 14px}
 #roomCanvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
@@ -84,32 +133,69 @@ button{font-family:inherit;cursor:pointer;border:0}
 <!-- HOME -->
 <section id="home" class="screen on">
   <div class="top">
-    <h1>מְעָרַת הָעֲטַלֵּפִים שֶׁל אוֹרִי</h1>
-    <div class="gems"><span id="gemCountH">0</span><span class="emIcon"></span></div>
+    <h1>הַמְּעָרָה שֶׁל אוֹרִי</h1>
+    <div class="gems"><span class="gemN">0</span><span class="emIcon"></span></div>
     <div class="seg" id="modeSeg"><button data-m="pen">✏️ עט</button><button data-m="finger">👆 אצבע</button></div>
     <button class="blk gold" id="toRoom">⛏️ הַמְּעָרָה שֶׁלִּי</button>
     <button class="blk ghost" id="fsBtn" title="מסך מלא">⛶</button>
     <button class="blk ghost" id="parentBtn" title="הורה">⚙️</button>
   </div>
+  <div class="fams" id="fams"></div>
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- PRACTICE -->
+<!-- PRACTICE (writing board, used by letters, words and the picture game) -->
 <section id="practice" class="screen">
   <div class="top">
     <button class="blk" id="backHome">🏠</button>
     <div class="stagebar" id="stagebar"></div>
     <div style="flex:1"></div>
-    <div class="gems"><span id="gemCountP">0</span><span class="emIcon"></span></div>
+    <div class="gems"><span class="gemN">0</span><span class="emIcon"></span></div>
   </div>
   <div id="board">
     <canvas id="guide"></canvas>
     <canvas id="ink"></canvas>
     <div id="msg"></div>
     <div id="reps"></div>
-    <div id="side"><button class="blk" id="demoBtn" title="תראה לי">🦇 תַּרְאֶה לִי</button><button class="blk" id="clearBtn" title="מחק">🧽</button></div>
+    <div id="side"><button class="blk" id="demoBtn"></button><button class="blk" id="clearBtn" title="מחק">🧽</button></div>
     <div id="actions"></div>
     <div id="modeHint"></div>
+  </div>
+</section>
+
+<!-- GAME: what does it start with -->
+<section id="pic" class="screen">
+  <div class="top">
+    <button class="blk" id="picBack">🏠</button>
+    <h1>בְּמָה זֶה מַתְחִיל?</h1>
+    <div class="ppips" id="picPips"></div>
+    <div class="gems"><span class="gemN">0</span><span class="emIcon"></span></div>
+  </div>
+  <div class="picwrap">
+    <div class="piccard"><div id="picEmoji"></div><button class="blk" id="picSay" title="תגיד את המילה">🔊</button></div>
+    <div id="picWord"></div>
+    <div id="picOpts"></div>
+    <div id="picMsg"></div>
+    <div id="picAct"></div>
+  </div>
+</section>
+
+<!-- GAME: XO -->
+<section id="xo" class="screen">
+  <div class="top">
+    <button class="blk" id="xoBack">🏠</button>
+    <h1>אִיקְס עִיגּוּל</h1>
+    <button class="blk" id="xoUndo">↩️ בַּטֵּל</button>
+    <button class="blk green" id="xoNew">🔄 מִשְׂחָק חָדָשׁ</button>
+    <div class="gems"><span class="gemN">0</span><span class="emIcon"></span></div>
+  </div>
+  <div class="xowrap">
+    <div class="xoside">
+      <div class="who" id="who0" style="--pc:#1d2340"><span class="sc" id="sc0">0</span>אוֹרִי<div class="xsel" data-p="0"></div></div>
+      <div class="who" id="who1" style="--pc:#1f9d55"><span class="sc" id="sc1">0</span>אַבָּא / אִמָּא<div class="xsel" data-p="1"></div></div>
+      <div id="xoTurn"></div>
+    </div>
+    <div id="xoBoard"><canvas id="xoCanvas"></canvas></div>
   </div>
 </section>
 
@@ -118,7 +204,7 @@ button{font-family:inherit;cursor:pointer;border:0}
   <div class="top">
     <button class="blk" id="roomBack">🏠</button>
     <h1>הַמְּעָרָה שֶׁל אוֹרִי</h1>
-    <div class="gems"><span id="gemCountR">0</span><span class="emIcon"></span></div>
+    <div class="gems"><span class="gemN">0</span><span class="emIcon"></span></div>
   </div>
   <div class="cave"><canvas id="roomCanvas"></canvas></div>
 </section>
@@ -136,45 +222,13 @@ button{font-family:inherit;cursor:pointer;border:0}
 
 <script>
 "use strict";
-/* ---------- letters: units: ceiling y=0, floor (line) y=100, pit y=150. x grows to the right. One stroke each. ---------- */
-const LETTERS = {
-  "י": {w:36,  name:"יוּד",  strokes:[[[22,0],[21,22],[18,46]]]},
-  "ו": {w:36,  name:"וָו",   strokes:[[[18,0],[18,100]]]},
-  "ן": {w:36,  name:"נוּן סוֹפִית", strokes:[[[18,0],[18,150]]]},
-  "נ": {w:80,  name:"נוּן",  strokes:[[[68,0],[68,86],[64,96],[54,100],[8,100]]]},
-  "מ": {w:96,  name:"מֵם",   strokes:[[[84,0],[84,100],[22,0],[16,100]]]},
-};
-const ORDER = ["י","ו","ן","נ","מ"];
-const WORDS = [
-  {id:"mi",   show:"מִי",   letters:["מ","י"]},
-  {id:"man",  show:"מָן",   letters:["מ","ן"]},
-  {id:"yayin",show:"יַיִן", letters:["י","י","ן"]},
-  {id:"nin",  show:"נִין",  letters:["נ","י","ן"]},
-  {id:"yamin",show:"יָמִין",letters:["י","מ","י","ן"]},
-];
-const STAGES = [
-  {id:"watch",  label:"צוֹפִים",       reps:1},
-  {id:"trace",  label:"שְׁבִיל",       reps:2},
-  {id:"fade",   label:"דֻּגְמָה",      reps:3, alphas:[.45,.25,.12]},
-  {id:"dot",    label:"נְקֻדָּה",      reps:2},
-  {id:"memory", label:"מֵהַזִּכָּרוֹן", reps:2},
-];
-const WORD_STAGES = [
-  {id:"wfade",   label:"עִם דֻּגְמָה", reps:1},
-  {id:"wmemory", label:"מֵהַזִּכָּרוֹן", reps:1},
-];
-
-/* ---------- storage (own key, never touches ori.t3.* / ori.tab.*) ---------- */
-const KEY = "ori.write.v1";
-function blank(){ return {mode:"pen", gems:0, letters:{}, words:{}, unlockAll:false, skip:false, log:[]}; }
-let S; try{ S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ S = blank(); }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
-function L(ch){ return S.letters[ch] || (S.letters[ch] = {stage:0, rep:0, done:false, writes:0}); }
-function W(id){ return S.words[id] || (S.words[id] = {stage:0, rep:0, done:false}); }
-function logEv(o){ S.log.push(Object.assign({t:new Date().toISOString()}, o)); if(S.log.length>500) S.log.splice(0, S.log.length-500); }
-
-/* ---------- pixel art (original) ---------- */
-const PAL = {k:"#111",d:"#2b2433",g:"#4b4256",G:"#6d6380",w:"#fff",r:"#e2453c",e:"#3ad17a",E:"#1f9d55",l:"#b6ffd2",y:"#ffcf4a",o:"#f08a24",b:"#7a4a24",B:"#5a3418",s:"#9a9a9a",S:"#6a6a6a"};
+/* =====================================================================
+   LETTER FAMILIES  (the only place to edit when the teacher adds a group)
+   Units: ceiling y=0, floor (line) y=100, pit y=150. x grows to the right.
+   A letter = width + name + strokes (each stroke is a polyline, drawn in order,
+   starting at its first point). Every game reads only from this config.
+   ===================================================================== */
+const PAL = {k:"#111",d:"#2b2433",g:"#4b4256",G:"#6d6380",w:"#fff",r:"#e2453c",e:"#3ad17a",E:"#1f9d55",l:"#b6ffd2",y:"#ffcf4a",o:"#f08a24",b:"#7a4a24",B:"#5a3418",s:"#9a9a9a",S:"#6a6a6a",f:"#57b947",F:"#2f7a2a",p:"#b9e88a"};
 const BAT = [ // hanging upside down, feet up
   "....kk..kk....",
   "....kgkkgk....",
@@ -191,11 +245,131 @@ const BAT_FLY = [
   "k..........k",
   "kk..k..k..kk",
   "kGk.kkkk.kGk",
-  "kGGkgggg kGGk".replace(" ",""),
+  "kGGkggggkGGk",
   "kGGgwrrwgGGk",
   ".kGggggggGk.",
   "..kk.gg.kk..",
   ".....kk....."];
+const FROG = [ // our own blocky frog, sitting
+  "..kk....kk..",
+  ".kwkk..kkwk.",
+  ".kfffkkfffk.",
+  "kffffffffffk",
+  "kffkkkkkkffk",
+  "kfffppppfffk",
+  ".kffppppffk.",
+  "kFFkffffkFFk",
+  "kkk.kkkk.kkk"];
+const FROG_JUMP = [
+  "..kk....kk..",
+  ".kwkk..kkwk.",
+  ".kfffkkfffk.",
+  "kffffffffffk",
+  "kffkkkkkkffk",
+  ".kfppppppfk.",
+  "kFk.kffk.kFk",
+  "kFk......kFk",
+  "kk........kk"];
+
+function arcPts(cx,cy,rx,ry,a0,a1,n=7){ const o=[]; for(let i=1;i<=n;i++){ const a=(a0+(a1-a0)*i/n)*Math.PI/180; o.push([Math.round((cx+rx*Math.cos(a))*10)/10, Math.round((cy+ry*Math.sin(a))*10)/10]); } return o; }
+// "frog jump": start on the ceiling at the left, go right, round the corner, down the right side to yEnd
+function topArc(x0, xr, yEnd=100){ const rx=Math.min(38,(xr-x0)*.55), ry=44; return [[x0,0],[xr-rx,0], ...arcPts(xr-rx,ry,rx,ry,-90,0,9), [xr,yEnd]]; }
+
+const FAMILIES = [
+  {
+    id:"bats", name:"קְבוּצַת הָעֲטַלֵּפִים", color:"#7b5ea7",
+    sprite:BAT, spriteMove:BAT_FLY, perch:"hang", room:"ceiling",
+    showMe:"🦇 תַּרְאֶה לִי", watchMsg:"הָעֲטַלֵּף מַרְאֶה אֶת הַדֶּרֶךְ",
+    newLetter:ch=>`עֲטַלֵּף חָדָשׁ הִצְטָרֵף לַמְּעָרָה! ${ch}`,
+    order:["י","ו","ן","נ","מ"],
+    letters:{
+      "י": {w:36,  name:"יוּד",  strokes:[[[22,0],[21,22],[18,46]]]},
+      "ו": {w:36,  name:"וָו",   strokes:[[[18,0],[18,100]]]},
+      "ן": {w:36,  name:"נוּן סוֹפִית", strokes:[[[18,0],[18,150]]]},
+      "נ": {w:80,  name:"נוּן",  strokes:[[[68,0],[68,86],[64,96],[54,100],[8,100]]]},
+      "מ": {w:96,  name:"מֵם",   strokes:[[[84,0],[84,100],[22,0],[16,100]]]},
+    },
+    words:[
+      {id:"mi",   show:"מִי",   letters:["מ","י"]},
+      {id:"man",  show:"מָן",   letters:["מ","ן"]},
+      {id:"yayin",show:"יַיִן", letters:["י","י","ן"]},
+      {id:"nin",  show:"נִין",  letters:["נ","י","ן"]},
+      {id:"yamin",show:"יָמִין",letters:["י","מ","י","ן"]},
+    ],
+    // "what does it start with" — everyday words only, one clear picture each
+    pictures:[
+      {w:"יָד",e:"✋"},{w:"יָרֵחַ",e:"🌙"},{w:"יַלְדָּה",e:"👧"},{w:"יוֹנָה",e:"🕊️"},
+      {w:"וָו",e:"🪝"},{w:"וֶרֶד",e:"🌹"},{w:"וָפֶל",e:"🧇"},
+      {w:"מָטוֹס",e:"✈️"},{w:"מַפְתֵּחַ",e:"🔑"},{w:"מַגָּף",e:"👢"},{w:"מִטְרִיָּה",e:"☂️"},{w:"מְלָפְפוֹן",e:"🥒"},
+      {w:"נָחָשׁ",e:"🐍"},{w:"נַעַל",e:"👟"},{w:"נֵר",e:"🕯️"},{w:"נְמָלָה",e:"🐜"},
+    ],
+  },
+  {
+    id:"frogs", name:"קְבוּצַת הַצְּפַרְדְּעִים", color:"#3f8f3a",
+    sprite:FROG, spriteMove:FROG_JUMP, perch:"sit", room:"pond",
+    showMe:"🐸 תַּרְאִי לִי", watchMsg:"הַצְּפַרְדֵּעַ מַרְאָה אֶת הַקְּפִיצָה",
+    newLetter:ch=>`צְפַרְדֵּעַ חֲדָשָׁה קָפְצָה לַבִּצָּה! ${ch}`,
+    order:["ר","ה","ק","ח","ת","ב"],
+    // workbook p.22–23: every frog letter starts with the jump over the top (left → right → down)
+    letters:{
+      "ר": {w:74, name:"רֵישׁ", strokes:[topArc(6,68)]},
+      "ה": {w:80, name:"הֵא",   strokes:[topArc(6,74), [[12,42],[12,100]]]},
+      "ק": {w:80, name:"קוּף",  strokes:[topArc(6,74), [[12,40],[12,150]]]},
+      "ח": {w:80, name:"חֵית",  strokes:[topArc(10,74), [[10,0],[10,100]]]},
+      "ת": {w:84, name:"תָּו",   strokes:[topArc(18,78), [[18,0],[18,86],[16,94],[10,99],[2,100]]]},
+      "ב": {w:84, name:"בֵּית",  strokes:[[...topArc(20,78,68), ...arcPts(52,68,26,32,0,90,6), [2,100]]]},
+    },
+    words:[
+      {id:"f_har",   show:"הַר",    letters:["ה","ר"]},
+      {id:"f_tut",   show:"תּוּת",   letters:["ת","ו","ת"]},
+      {id:"f_kir",   show:"קִיר",   letters:["ק","י","ר"]},
+      {id:"f_bayit", show:"בַּיִת",  letters:["ב","י","ת"]},
+      {id:"f_yareach",show:"יָרֵחַ", letters:["י","ר","ח"]},
+      {id:"f_boker", show:"בֹּקֶר",  letters:["ב","ק","ר"]},
+    ],
+    pictures:[
+      {w:"רַכֶּבֶת",e:"🚂"},{w:"רוֹבּוֹט",e:"🤖"},{w:"רֶגֶל",e:"🦵"},
+      {w:"הַר",e:"⛰️"},{w:"הִיפּוֹפּוֹטָם",e:"🦛"},{w:"הֶלִיקוֹפְּטֶר",e:"🚁"},{w:"הַמְבּוּרְגֶּר",e:"🍔"},
+      {w:"קוֹף",e:"🐒"},{w:"קִפּוֹד",e:"🦔"},{w:"קַקְטוּס",e:"🌵"},{w:"קֶשֶׁת",e:"🌈"},
+      {w:"חָתוּל",e:"🐱"},{w:"חָלָב",e:"🥛"},{w:"חַלּוֹן",e:"🪟"},
+      {w:"תַּפּוּחַ",e:"🍎"},{w:"תּוּת",e:"🍓"},{w:"תַּרְנְגוֹל",e:"🐓"},{w:"תִּינוֹק",e:"👶"},
+      {w:"בָּנָנָה",e:"🍌"},{w:"בַּיִת",e:"🏠"},{w:"בַּרְוָז",e:"🦆"},{w:"בָּלוֹן",e:"🎈"},
+    ],
+  },
+];
+const LETTERS = Object.assign({}, ...FAMILIES.map(f=>f.letters));
+const FINALS = "ךםןףץ";
+const bare = w => w.replace(/[֑-ׇ]/g,"");
+// sanity check of the config (shows in the console only)
+FAMILIES.forEach(f=>{
+  f.order.forEach(c=>{ if(!f.letters[c]) console.warn("family",f.id,"missing letter",c); });
+  f.words.forEach(w=>w.letters.forEach(c=>{ if(!LETTERS[c]) console.warn("word",w.id,"uses unknown letter",c); }));
+  f.pictures.forEach(p=>{ if(!f.order.includes(bare(p.w)[0])) console.warn("picture",p.w,"does not start with a",f.id,"letter"); });
+});
+
+const STAGES = [
+  {id:"watch",  label:"צוֹפִים",       reps:1},
+  {id:"trace",  label:"שְׁבִיל",       reps:2},
+  {id:"fade",   label:"דֻּגְמָה",      reps:3, alphas:[.45,.25,.12]},
+  {id:"dot",    label:"נְקֻדָּה",      reps:2},
+  {id:"memory", label:"מֵהַזִּכָּרוֹן", reps:2},
+];
+const WORD_STAGES = [
+  {id:"wfade",   label:"עִם דֻּגְמָה", reps:1},
+  {id:"wmemory", label:"מֵהַזִּכָּרוֹן", reps:1},
+];
+
+/* ---------- storage (own key, never touches ori.t3.* / ori.tab.*) ---------- */
+const KEY = "ori.write.v1";
+function blank(){ return {mode:"pen", gems:0, letters:{}, words:{}, unlockAll:false, skip:false, log:[], family:"bats", games:{pic:{rounds:0, firstTry:0}, xo:{ori:0, parent:0, draw:0}}}; }
+let S; try{ S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ S = blank(); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function L(ch){ return S.letters[ch] || (S.letters[ch] = {stage:0, rep:0, done:false, writes:0}); }
+function W(id){ return S.words[id] || (S.words[id] = {stage:0, rep:0, done:false}); }
+function logEv(o){ S.log.push(Object.assign({t:new Date().toISOString(), fam:S.family}, o)); if(S.log.length>500) S.log.splice(0, S.log.length-500); }
+function fam(){ return FAMILIES.find(f=>f.id===S.family) || FAMILIES[0]; }
+
+/* ---------- pixel art (original) ---------- */
 const EMERALD = [
   "....kk....",
   "...klek...",
@@ -225,7 +399,7 @@ const CHEST = [
   "kbBBBBBBbk",
   "kbbbbbbbbk",
   "kkkkkkkkkk"];
-function pixSVG(map, px=1){
+function pixSVG(map){
   const h=map.length, w=Math.max(...map.map(r=>r.length)); let r="";
   map.forEach((row,y)=>[...row].forEach((c,x)=>{ if(PAL[c]) r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${PAL[c]}"/>`; }));
   return `<svg viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">${r}</svg>`;
@@ -258,21 +432,23 @@ function pointAt(p, t){ // t in [0,1] along length
 }
 function distSeg(px,py,a,b){ const dx=b[0]-a[0],dy=b[1]-a[1]; const l2=dx*dx+dy*dy; let t=l2?((px-a[0])*dx+(py-a[1])*dy)/l2:0; t=Math.max(0,Math.min(1,t)); return Math.hypot(px-(a[0]+t*dx),py-(a[1]+t*dy)); }
 function distPoly(px,py,p){ let m=1e9; for(let i=1;i<p.length;i++) m=Math.min(m,distSeg(px,py,p[i-1],p[i])); return m; }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 /* ---------- audio ---------- */
 let AC=null;
 function beep(f=660,d=.08,type="square",vol=.05){ try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); const o=AC.createOscillator(),g=AC.createGain(); o.type=type; o.frequency.value=f; g.gain.value=vol; g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d); o.connect(g).connect(AC.destination); o.start(); o.stop(AC.currentTime+d); }catch(e){} }
 function chord(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,"square",.05),i*90)); }
+function say(text){ try{ if(!window.speechSynthesis) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(bare(text)); u.lang="he-IL"; u.rate=.8;
+  const v=speechSynthesis.getVoices().find(v=>/^he|^iw/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.speak(u); }catch(e){} }
 
 /* ---------- screens ---------- */
 function show(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on", s.id===id)); }
-function updGems(){ ["gemCountH","gemCountP","gemCountR"].forEach(i=>document.getElementById(i).textContent=S.gems); }
+function updGems(){ document.querySelectorAll(".gemN").forEach(e=>e.textContent=S.gems); }
 
-function glyphSVG(letters, pad=14){
-  // RTL layout in units; returns svg with lines
+function glyphSVG(letters, pad=14, color="#1d2340"){
   const lay = layout(letters); const W0=lay.width+pad*2;
   let lines=`<line x1="0" y1="0" x2="${W0}" y2="0" stroke="#3b4a8c" stroke-width="2"/><line x1="0" y1="100" x2="${W0}" y2="100" stroke="#3b4a8c" stroke-width="2"/><line x1="0" y1="150" x2="${W0}" y2="150" stroke="#3b4a8c" stroke-width="1" stroke-dasharray="6 6" opacity=".5"/>`;
-  let ps=""; lay.items.forEach(it=>it.strokes.forEach(s=>{ ps+=`<polyline fill="none" stroke="#1d2340" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" points="${s.map(q=>(q[0]+pad)+","+q[1]).join(" ")}"/>`; }));
+  let ps=""; lay.items.forEach(it=>it.strokes.forEach(s=>{ ps+=`<polyline fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" points="${s.map(q=>(q[0]+pad)+","+q[1]).join(" ")}"/>`; }));
   return `<svg viewBox="0 -25 ${W0} 190" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${lines}${ps}</svg>`;
 }
 function layout(letters, gap=22){ // place letters right-to-left; x in units from left edge of the word
@@ -282,47 +458,65 @@ function layout(letters, gap=22){ // place letters right-to-left; x in units fro
   return {width, items};
 }
 
-function letterUnlocked(i){ if(S.unlockAll||i===0) return true; const prev=L(ORDER[i-1]); return prev.done || prev.stage>=3 || L(ORDER[i]).stage>0; }
+function letterUnlocked(i){ const ord=fam().order; if(S.unlockAll||i===0) return true; const prev=L(ord[i-1]); return prev.done || prev.stage>=3 || L(ord[i]).stage>0; }
 function wordUnlocked(w){ return S.unlockAll || w.letters.every(c=>L(c).done); }
 
+function renderFams(){
+  const box=document.getElementById("fams"); box.innerHTML="";
+  FAMILIES.forEach(f=>{
+    const done=f.order.filter(c=>L(c).done).length;
+    const b=document.createElement("button"); b.className="fam"+(f.id===S.family?" on":""); b.style.setProperty("--fc",f.color);
+    b.innerHTML=`<span class="ms">${pixSVG(f.sprite)}</span><span>${f.name}<br><small>${f.order.join(" ")} · ${done}/${f.order.length}</small></span>`;
+    b.onclick=()=>{ S.family=f.id; save(); renderHome(); };
+    box.appendChild(b);
+  });
+}
 function renderHome(){
-  updGems(); setModeSeg();
-  const g=document.getElementById("grid"); g.innerHTML="";
-  ORDER.forEach((ch,i)=>{
+  updGems(); setModeSeg(); renderFams();
+  const F=fam(), g=document.getElementById("grid"); g.innerHTML="";
+  F.order.forEach((ch,i)=>{
     const st=L(ch), un=letterUnlocked(i);
     const c=document.createElement("button"); c.className="card"+(st.done?" done":"")+(un?"":" locked");
-    c.innerHTML=`<div class="bat">${pixSVG(BAT)}</div>${st.done?'<span class="tag">✔︎</span>':''}<div class="glyph">${glyphSVG([ch])}</div>
+    c.innerHTML=`<div class="mascot">${pixSVG(F.sprite)}</div>${st.done?'<span class="tag">✔︎</span>':''}<div class="glyph">${glyphSVG([ch])}</div>
       <div class="pips">${STAGES.map((s,k)=>`<span class="pip ${(st.done||k<st.stage)?"on":""}"></span>`).join("")}</div>`;
     c.onclick=()=>{ if(!un){ beep(200,.15); return; } startLetter(ch); };
     g.appendChild(c);
   });
-  const anyWord = WORDS.some(wordUnlocked);
+  g.appendChild(Object.assign(document.createElement("div"),{className:"rowbreak"}));
+  const WORDS=F.words, anyWord = WORDS.some(wordUnlocked);
   const wc=document.createElement("button"); wc.className="card words"+(anyWord?"":" locked");
   const doneW=WORDS.filter(w=>W(w.id).done).length;
   wc.innerHTML=`<div class="glyph" style="display:flex;align-items:center;justify-content:center;color:#1d2340;font-size:30px;font-weight:800">${WORDS.map(w=>w.show).join(" · ")}</div>
-    <div style="font-size:20px;font-weight:700">מִלִּים ${doneW}/${WORDS.length} ${anyWord?"":"🔒"}</div>`;
+    <div class="ttl">מִלִּים ${doneW}/${WORDS.length} ${anyWord?"":"🔒"}</div>`;
   wc.onclick=()=>{ if(!anyWord){ beep(200,.15); return; } const w=WORDS.find(w=>wordUnlocked(w)&&!W(w.id).done)||WORDS.find(wordUnlocked); startWord(w); };
   g.appendChild(wc);
+  const g1=document.createElement("button"); g1.className="card game";
+  g1.innerHTML=`<div class="glyph">${F.pictures[Math.floor(Math.random()*F.pictures.length)].e}</div><div class="ttl">בְּמָה זֶה מַתְחִיל?</div>`;
+  g1.onclick=()=>startPicGame(); g.appendChild(g1);
+  const g2=document.createElement("button"); g2.className="card game";
+  g2.innerHTML=`<div class="glyph" style="font-size:56px;font-weight:800"><span style="color:#1d2340">X</span><span style="color:#1f9d55">O</span></div><div class="ttl">אִיקְס עִיגּוּל</div>`;
+  g2.onclick=()=>startXO(); g.appendChild(g2);
 }
 function setModeSeg(){ document.querySelectorAll("#modeSeg button").forEach(b=>b.classList.toggle("on", b.dataset.m===S.mode)); }
 document.querySelectorAll("#modeSeg button").forEach(b=>b.onclick=()=>{ S.mode=b.dataset.m; save(); setModeSeg(); });
 
-/* ---------- practice engine ---------- */
+/* ---------- practice engine (any family, any letter) ---------- */
 const board=document.getElementById("board"), gC=document.getElementById("guide"), iC=document.getElementById("ink");
 const gx=gC.getContext("2d"), ix=iC.getContext("2d");
 let P=null; // current session
 let geo=null; // screen mapping
 let anim=null;
 
+function openBoard(){ stopAnim(); P.hit=[]; P.strokeIdx=0; document.getElementById("demoBtn").textContent=fam().showMe; show("practice"); requestAnimationFrame(()=>{ resize(); enterStage(); }); }
 function startLetter(ch){
   const st=L(ch); if(st.done){ st.stage=2; st.rep=0; st.replay=true; }
   P={kind:"letter", ch, letters:[ch], stages:STAGES, get st(){return L(ch);} };
-  show("practice"); requestAnimationFrame(()=>{ resize(); enterStage(); });
+  openBoard();
 }
 function startWord(w){
   P={kind:"word", w, letters:w.letters, stages:WORD_STAGES, get st(){return W(w.id);} };
   if(P.st.done){ P.st.stage=0; P.st.rep=0; }
-  show("practice"); requestAnimationFrame(()=>{ resize(); enterStage(); });
+  openBoard();
 }
 function stage(){ return P.stages[P.st.stage]; }
 
@@ -343,7 +537,10 @@ function resize(){
   geo.cps = geo.strokes.map(st=>sampleAlong(st.map(([x,y])=>[(x-ox)/s,(y-oy)/s]), 16).map(([x,y])=>[ox+x*s, oy+y*s]));
   drawGuide(); redrawInk();
 }
-window.addEventListener("resize", ()=>{ if(document.getElementById("practice").classList.contains("on")) resize(); else if(document.getElementById("room").classList.contains("on")) drawRoom(); });
+window.addEventListener("resize", ()=>{
+  const on=id=>document.getElementById(id).classList.contains("on");
+  if(on("practice")) resize(); else if(on("room")) drawRoom(); else if(on("xo")) xoResize();
+});
 
 function enterStage(){
   stopAnim(); clearInk(); P.hit=geo? geo.cps.map(()=>0):[]; P.strokeIdx=0; P.inked=false; P.failMsg="";
@@ -353,16 +550,23 @@ function enterStage(){
   const id=stage().id;
   if(id==="watch"){ playDemo(true); setActions([{t:"עַכְשָׁו אֲנִי! ✋", c:"green", f:()=>advance()}]); }
   if(id==="wfade" && P.st.rep===0) playDemo(false);
+  if(P.kind==="pic" && id==="fade") playDemo(false);
 }
 function stageMsg(){
-  const id=stage().id, nm = P.kind==="letter" ? LETTERS[P.ch].name : P.w.show;
-  return {watch:`הָעֲטַלֵּף מַרְאֶה אֶת הַדֶּרֶךְ: ${nm}`, trace:"עֲבֹר בַּשְּׁבִיל וְאֱסֹף אֶת הָאֶמֶרַלְדִּים", fade:"כְּתֹב עַל הַדֻּגְמָה",
+  const id=stage().id;
+  if(P.kind==="pic") return id==="dot" ? `כְּתֹב ${LETTERS[P.ch].name} מֵהַנְּקֻדָּה הַיְּרֻקָּה` : `כְּתֹב ${LETTERS[P.ch].name} עַל הַדֻּגְמָה`;
+  const nm = P.kind==="letter" ? LETTERS[P.ch].name : P.w.show;
+  return {watch:`${fam().watchMsg}: ${nm}`, trace:"עֲבֹר בַּשְּׁבִיל וְאֱסֹף אֶת הָאֶמֶרַלְדִּים", fade:"כְּתֹב עַל הַדֻּגְמָה",
           dot:"מַתְחִילִים בַּנְּקֻדָּה הַיְּרֻקָּה", memory:"עַכְשָׁו לְבַד, מֵהַזִּכָּרוֹן", wfade:`כְּתֹב: ${nm}`, wmemory:`כְּתֹב לְבַד: ${nm}`}[id];
 }
 function renderStagebar(){
   const b=document.getElementById("stagebar");
-  b.innerHTML = (P.kind==="letter"?`<span class="stg on" style="background:#0000;font-size:22px">${LETTERS[P.ch].name}</span>`:"") +
-    P.stages.map((s,i)=>`<span class="stg ${i===P.st.stage?"on":(i<P.st.stage?"done":"")}">${s.label}</span>`).join("");
+  if(P.kind==="pic"){
+    b.innerHTML=`<span class="stg on" style="background:#0000;font-size:34px">${P.pic.e}</span><span class="stg on" style="font-size:22px">${P.pic.w}</span>`;
+  } else {
+    b.innerHTML = (P.kind==="letter"?`<span class="stg on" style="background:#0000;font-size:22px">${LETTERS[P.ch].name}</span>`:"") +
+      P.stages.map((s,i)=>`<span class="stg ${i===P.st.stage?"on":(i<P.st.stage?"done":"")}">${s.label}</span>`).join("");
+  }
   const reps=document.getElementById("reps"); const n=stage().reps;
   reps.innerHTML = n>1 ? Array.from({length:n},(_,i)=>`<i class="${i<P.st.rep?"on":""}"></i>`).join("") : "";
 }
@@ -375,7 +579,7 @@ function setActions(list){
 /* guide drawing */
 function drawGuide(extra){
   if(!geo) return; const g=gx, {W,Hh,s,ox,oy,H}=geo; g.clearRect(0,0,W,Hh);
-  // cave ceiling (top line) + floor line + pit line
+  // ceiling (top line) + floor line + pit line
   g.fillStyle="#d9d0bd"; g.fillRect(0,0,W,oy);
   for(let x=0;x<W;x+=24){ g.fillStyle=(x/24)%2? "#cfc5ae":"#c4b99f"; g.fillRect(x,oy-10,24,10); }
   g.strokeStyle="#3b4a8c"; g.lineWidth=4; g.beginPath(); g.moveTo(0,oy); g.lineTo(W,oy); g.stroke();
@@ -383,27 +587,33 @@ function drawGuide(extra){
   g.setLineDash([10,10]); g.lineWidth=2; g.globalAlpha=.45; g.beginPath(); g.moveTo(0,oy+1.5*H); g.lineTo(W,oy+1.5*H); g.stroke(); g.setLineDash([]); g.globalAlpha=1;
   g.fillStyle="#3b4a8c"; g.font="600 14px Rubik"; g.textAlign="right";
   g.fillText("תִּקְרַת הַמְּעָרָה", W-12, oy-14); g.fillText("הָרִצְפָּה", W-12, oy+H-8); g.fillText("הַבּוֹר", W-12, oy+1.5*H-8);
-  // hanging bats on the ceiling, decorative
-  [.08,.9].forEach(f=>drawPix(g,BAT,W*f,oy, Math.max(3,H/40), .35));
+  // family mascots on the ceiling line, decorative
+  const F=fam(), mpx=Math.max(3,H/40);
+  [.08,.9].forEach(f=>drawPix(g,F.sprite,W*f, F.perch==="hang"? oy : oy-F.sprite.length*mpx, mpx, .35));
   const id=stage().id;
   const line=(st,width,color,alpha=1,dash)=>{ g.save(); g.globalAlpha=alpha; g.strokeStyle=color; g.lineWidth=width; g.lineCap="round"; g.lineJoin="round"; if(dash) g.setLineDash(dash);
     g.beginPath(); st.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y)); g.stroke(); g.restore(); };
+  const multi = geo.strokes.length>1;
   geo.strokes.forEach((st,k)=>{
     if(id==="watch"||id==="trace"){
       line(st, geo.half*2+8, "#8a7a5a", 1); line(st, geo.half*2, "#efe3c4", 1); // tunnel
       line(st, 3, "#b9a77d", 1, [8,10]);
-      if(id==="trace") geo.cps[k].forEach((p,j)=>{ if(!P.hit[k]||j>=P.hit[k]) if(j>0) drawPix(g,EMERALD,p[0]-H*.045,p[1]-H*.045,H*.01); });
+      if(id==="trace") geo.cps[k].forEach((p,j)=>{ const h=(P.hit&&P.hit[k])||0; if(j>0 && j>=h) drawPix(g,EMERALD,p[0]-H*.045,p[1]-H*.045,H*.01); });
       arrowAlong(g, st, H);
     } else if(id==="fade"){
       line(st, H*.07, "#1d2340", stage().alphas[P.st.rep]||.12);
     } else if(id==="wfade"){
       line(st, H*.07, "#1d2340", .2);
     }
-    if(id!=="memory" && id!=="wmemory"){
-      const [sx,sy]=st[0]; g.fillStyle="#2bb35e"; g.beginPath(); g.arc(sx,sy,Math.max(9,H*.05),0,7); g.fill();
-      g.strokeStyle="#fff"; g.lineWidth=3; g.stroke();
-    }
   });
+  if(id!=="memory" && id!=="wmemory"){
+    geo.strokes.forEach((st,k)=>{
+      if(k<P.strokeIdx && P.kind!=="word") return; // already written
+      const [sx,sy]=st[0], r=Math.max(9,H*.05), next = k===P.strokeIdx;
+      g.fillStyle= next? "#2bb35e" : "#9fcfb0"; g.beginPath(); g.arc(sx,sy,r,0,7); g.fill(); g.strokeStyle="#fff"; g.lineWidth=3; g.stroke();
+      if(multi && P.kind!=="word"){ g.fillStyle="#fff"; g.font=`800 ${Math.round(r*1.3)}px Rubik`; g.textAlign="center"; g.textBaseline="middle"; g.fillText(String(k+1), sx, sy+1); g.textBaseline="alphabetic"; }
+    });
+  }
   if(extra) extra(g);
 }
 function arrowAlong(g, st, H){
@@ -412,19 +622,18 @@ function arrowAlong(g, st, H){
     g.save(); g.translate(mx,my); g.rotate(a); g.fillStyle="#2bb35e"; g.beginPath(); g.moveTo(r,0); g.lineTo(-r*.7,r*.7); g.lineTo(-r*.7,-r*.7); g.closePath(); g.fill(); g.restore(); }
 }
 
-/* demo: bat flies along the strokes */
+/* demo: the family's mascot moves along the strokes */
 function stopAnim(){ if(anim){ cancelAnimationFrame(anim.raf); anim=null; } }
 function playDemo(loop){
   stopAnim(); const t0=performance.now(); const per=1500;
-  const strokes=geo.strokes; const n=strokes.length;
+  const strokes=geo.strokes; const n=strokes.length; const spr=fam().spriteMove;
   const frame=(now)=>{
     let t=(now-t0)/per; const total=n+0.6; if(t>total){ if(loop) return playDemoAfter(); drawGuide(); anim=null; return; }
     drawGuide(g=>{
       for(let k=0;k<n;k++){ const f=Math.max(0,Math.min(1,t-k)); if(f<=0) break; const st=strokes[k];
-        // trail
         g.save(); g.strokeStyle="#1d2340"; g.lineWidth=geo.H*.06; g.lineCap="round"; g.lineJoin="round"; g.beginPath();
         const N=40; for(let q=0;q<=N*f;q++){ const p=pointAt(st,q/N); q?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]); } const pe=pointAt(st,f); g.lineTo(pe[0],pe[1]); g.stroke(); g.restore();
-        if(f<1){ const px=geo.H/26; drawPix(g,BAT_FLY,pe[0]-6*px,pe[1]-8*px,px); }
+        if(f<1){ const px=geo.H/26; drawPix(g,spr,pe[0]-spr[0].length/2*px,pe[1]-spr.length*px,px); }
       }
     });
     anim.raf=requestAnimationFrame(frame);
@@ -432,7 +641,7 @@ function playDemo(loop){
   anim={raf:requestAnimationFrame(frame)};
   function playDemoAfter(){ anim={raf:requestAnimationFrame(()=>{ setTimeout(()=>{ if(anim) playDemo(true); }, 500); })}; }
 }
-document.getElementById("demoBtn").onclick=()=>{ clearInk(); playDemo(false); };
+document.getElementById("demoBtn").onclick=()=>{ clearInk(); P.hit=geo.cps.map(()=>0); P.strokeIdx=0; playDemo(false); };
 document.getElementById("clearBtn").onclick=()=>{ clearInk(); P.hit=geo.cps.map(()=>0); P.strokeIdx=0; P.inked=false; drawGuide(); if(isParentStage()) setActions([]); };
 
 /* ink */
@@ -484,27 +693,27 @@ function endStroke(e){
   const cps=geo.cps[st.k]; const id=stage().id;
   const limit = id==="trace" ? geo.wide : geo.wide*1.25;
   const done = P.hit[st.k] >= cps.length-1 && P.hit[st.k]>=Math.ceil(cps.length*.85);
-  if(!st.startOk){ return fail("מַתְחִילִים בַּנְּקֻדָּה הַיְּרֻקָּה, לְמַעְלָה בַּתִּקְרָה"); }
+  if(!st.startOk){ return fail("מַתְחִילִים בַּנְּקֻדָּה הַיְּרֻקָּה"); }
   if(st.maxDev>limit){ return fail("יָצָאנוּ מֵהַשְּׁבִיל, נְנַסֶּה שׁוּב"); }
   if(!done){
     if(st.pts.length<4) return; // a tap; ignore
     return fail("עוֹד קְצָת! עַד הַסּוֹף בְּלִי לְהָרִים");
   }
   P.strokeIdx++;
-  if(P.strokeIdx>=geo.strokes.length) success(); else drawGuide();
+  if(P.strokeIdx>=geo.strokes.length) success(); else { beep(700,.06); drawGuide(); }
 }
 iC.addEventListener("pointerup", endStroke); iC.addEventListener("pointercancel", e=>{ if(cur&&e.pointerId===cur.id){ cur=null; redrawInk(); } });
 
 function fail(text){
   setMsg(text); beep(220,.15,"triangle",.06);
-  logEv({ev:"miss", what:P.ch||P.w.id, stage:stage().id, why:text});
+  logEv({ev:"miss", kind:P.kind, what:P.ch||P.w.id, stage:stage().id, why:text});
   setTimeout(()=>{ clearInk(); P.hit=geo.cps.map(()=>0); P.strokeIdx=0; playDemo(false); setTimeout(()=>setMsg(stageMsg()),1400); }, 700);
   save();
 }
 function success(){
   S.gems+=1; updGems(); chord(); setMsg("כׇּל הַכָּבוֹד אוֹרִי! +1 💎");
-  if(P.kind==="letter") L(P.ch).writes++;
-  logEv({ev:"ok", what:P.ch||P.w.id, stage:stage().id});
+  if(P.kind==="letter"||P.kind==="pic") L(P.ch).writes++;
+  logEv({ev:"ok", kind:P.kind, what:P.ch||P.w.id, stage:stage().id});
   save(); setTimeout(nextRep, 900);
 }
 function askParent(){
@@ -517,7 +726,7 @@ function askParent(){
 function showModelOverlay(){ drawGuide(g=>geo.strokes.forEach(st=>{ g.save(); g.globalAlpha=.35; g.strokeStyle="#2bb35e"; g.lineWidth=geo.H*.05; g.lineCap="round"; g.lineJoin="round"; g.beginPath(); st.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y)); g.stroke(); g.restore(); })); }
 
 function nextRep(){
-  const st=P.st; st.rep++;
+  if(!P) return; const st=P.st; st.rep++;
   if(st.rep>=stage().reps || S.skip){ advance(); return; }
   save(); enterStage();
 }
@@ -527,60 +736,258 @@ function advance(){
   save(); enterStage();
 }
 function finishItem(){
+  if(P.kind==="pic"){ const done=P.onDone; P=null; done(); return; }
   const st=P.st; const first=!st.done; st.done=true; st.stage=0; st.rep=0; delete st.replay; save();
   logEv({ev:"done", what:P.ch||P.w.id}); save();
   if(P.kind==="letter"){
-    celebrate(first? `עֲטַלֵּף חָדָשׁ הִצְטָרֵף לַמְּעָרָה! ${P.ch}` : `עוֹד פַּעַם ${P.ch}! מְצֻיָּן`, pixSVG(BAT));
+    celebrate(first? fam().newLetter(P.ch) : `עוֹד פַּעַם ${P.ch}! מְצֻיָּן`, pixSVG(fam().sprite));
   } else {
     celebrate(first? `תֵּבַת אוֹצָר חֲדָשָׁה! ${P.w.show}` : `${P.w.show} מְצֻיָּן!`, pixSVG(CHEST));
   }
 }
-function celebrate(text, art){
+let celeNext=null;
+function celebrate(text, art, next){
+  celeNext=next||null;
   document.getElementById("celeText").textContent=text; document.getElementById("celeArt").innerHTML=art;
   document.getElementById("cele").classList.add("on"); chord();
 }
 document.getElementById("celeOk").onclick=()=>{
   document.getElementById("cele").classList.remove("on");
-  if(P && P.kind==="word"){ const next=WORDS.find(w=>wordUnlocked(w)&&!W(w.id).done); if(next){ startWord(next); return; } }
+  if(celeNext){ const f=celeNext; celeNext=null; f(); return; }
+  if(P && P.kind==="word"){ const next=fam().words.find(w=>wordUnlocked(w)&&!W(w.id).done); if(next){ startWord(next); return; } }
   goHome();
 };
 
-/* ---------- room ---------- */
+/* =====================================================================
+   GAME 1: "בְּמָה זֶה מַתְחִיל?" — picture → tap the first letter (auto-checked,
+   it is recognition, not handwriting) → write that letter on the board
+   (path-checked from the start dot; a faint model if the letter is not learned yet).
+   ===================================================================== */
+const PIC_ROUNDS=6;
+let G=null;
+function startPicGame(){
+  const F=fam();
+  // spread rounds over the letters: one picture per letter first, then fill up
+  const byL={}; shuffle(F.pictures).forEach(p=>{ const c=bare(p.w)[0]; (byL[c]=byL[c]||[]).push(p); });
+  const deck=[]; let more=true;
+  while(deck.length<PIC_ROUNDS && more){ more=false; shuffle(Object.keys(byL)).forEach(c=>{ if(deck.length<PIC_ROUNDS && byL[c].length){ deck.push(byL[c].shift()); more=true; } }); }
+  G={F, deck:shuffle(deck), i:0, score:0};
+  show("pic"); renderPic();
+}
+function renderPic(){
+  const p=G.deck[G.i]; G.first=true; G.solved=false; updGems();
+  document.getElementById("picPips").innerHTML=G.deck.map((_,k)=>`<i class="${k<G.i?"on":(k===G.i?"cur":"")}"></i>`).join("");
+  document.getElementById("picEmoji").textContent=p.e;
+  document.getElementById("picWord").innerHTML="";
+  document.getElementById("picMsg").textContent="מָה רוֹאִים בַּתְּמוּנָה? בְּאֵיזוֹ אוֹת זֶה מַתְחִיל?";
+  document.getElementById("picAct").innerHTML="";
+  const box=document.getElementById("picOpts"); box.innerHTML="";
+  G.F.order.filter(c=>!FINALS.includes(c)).forEach(c=>{
+    const b=document.createElement("button"); b.innerHTML=glyphSVG([c],10); b.dataset.c=c;
+    b.onclick=()=>pickLetter(b,c,p); box.appendChild(b);
+  });
+}
+function pickLetter(btn,c,p){
+  if(G.solved||btn.classList.contains("wrong")) return;
+  const want=bare(p.w)[0];
+  if(c!==want){
+    btn.classList.add("wrong"); G.first=false; beep(220,.15,"triangle",.06);
+    document.getElementById("picMsg").textContent="לֹא זֹאת. תַּגִּיד אֶת הַמִּלָּה לְאַט, מָה הַצְּלִיל הָרִאשׁוֹן?";
+    logEv({ev:"pic_miss", word:bare(p.w), picked:c}); save(); return;
+  }
+  G.solved=true; btn.classList.add("right"); chord();
+  const m=p.w.match(/^.[֑-ׇ]*/)[0];
+  document.getElementById("picWord").innerHTML=`<span class="first">${m}</span>${p.w.slice(m.length)}`;
+  S.games.pic.rounds++; if(G.first){ S.games.pic.firstTry++; S.gems+=1; G.score++; updGems(); }
+  document.getElementById("picMsg").textContent = G.first ? `נָכוֹן! ${LETTERS[c].name} +1 💎` : `נָכוֹן! ${LETTERS[c].name}`;
+  logEv({ev:"pic_ok", word:bare(p.w), first:G.first}); save();
+  const act=document.getElementById("picAct"); act.innerHTML="";
+  const go=document.createElement("button"); go.className="blk green"; go.textContent=`✏️ עַכְשָׁו כְּתֹב ${c}`;
+  go.onclick=()=>picWrite(c,p); act.appendChild(go);
+  const skip=document.createElement("button"); skip.className="blk ghost"; skip.textContent="⏭"; skip.title="דלג (הורה)";
+  skip.onclick=()=>picNext(); act.appendChild(skip);
+}
+function picWrite(c,p){
+  const learned=L(c).done;
+  const stg = learned ? {id:"dot", label:"נְקֻדָּה", reps:1} : {id:"fade", label:"דֻּגְמָה", reps:1, alphas:[.25]};
+  P={kind:"pic", ch:c, pic:p, letters:[c], stages:[stg], st:{stage:0, rep:0}, onDone:()=>{ show("pic"); picNext(); }};
+  openBoard();
+}
+function picNext(){
+  G.i++;
+  if(G.i>=G.deck.length){
+    show("pic");
+    celebrate(`סִיַּמְתָּ ${G.deck.length} תְּמוּנוֹת! ${G.score} 💎 בְּנִסָּיוֹן רִאשׁוֹן`, pixSVG(G.F.sprite), goHome);
+    return;
+  }
+  renderPic();
+}
+document.getElementById("picSay").onclick=()=>{ if(G) say(G.deck[G.i].w); };
+if(!window.speechSynthesis) document.getElementById("picSay").style.display="none";
+document.getElementById("picBack").onclick=goHome;
+
+/* =====================================================================
+   GAME 2: איקס עיגול (workbook p.17): Ori vs a parent on the same tablet.
+   Each player owns one letter of the family and writes it in a cell.
+   No grading: the opponent sits right there. A cell is committed ~1.2s
+   after the pen lifts (so two-stroke letters work).
+   ===================================================================== */
+const XO_COL=["#1d2340","#1f9d55"];
+const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+let X=null;
+const xoC=document.getElementById("xoCanvas"), xx=xoC.getContext("2d");
+function startXO(){
+  const F=fam();
+  if(!X || X.fam!==F.id){
+    const two=shuffle(F.order).slice(0,2);
+    X={fam:F.id, letters:two, starter:0, score:[0,0]};
+  }
+  newXOGame(); show("xo"); renderXOSide(); requestAnimationFrame(xoResize);
+}
+function newXOGame(){
+  Object.assign(X,{cells:Array.from({length:9},()=>({owner:null,strokes:[]})), turn:X.starter, hist:[], pend:null, cur:null, over:false, win:null});
+  X.starter=1-X.starter; clearTimeout(X.timer);
+}
+function renderXOSide(){
+  const F=fam();
+  [0,1].forEach(p=>{
+    document.getElementById("who"+p).classList.toggle("turn", !X.over && X.turn===p);
+    document.getElementById("sc"+p).textContent=X.score[p];
+    const box=document.querySelector(`.xsel[data-p="${p}"]`); box.innerHTML="";
+    F.order.forEach(c=>{
+      const b=document.createElement("button"); b.innerHTML=glyphSVG([c],8,XO_COL[p]);
+      b.classList.toggle("on", X.letters[p]===c); b.disabled = X.letters[1-p]===c;
+      b.onclick=()=>{ if(X.letters[p]===c) return; X.letters[p]=c; X.starter=0; newXOGame(); renderXOSide(); xoDraw(); };
+      box.appendChild(b);
+    });
+  });
+  const t=document.getElementById("xoTurn");
+  if(X.over){
+    t.innerHTML = X.win ? `<div>${X.win.p===0?"אוֹרִי נִצֵּחַ! 🎉":"אַבָּא/אִמָּא נִצְּחוּ"}</div>` : `<div>תֵּיקוּ!</div>`;
+  } else {
+    const p=X.turn;
+    t.innerHTML=`<div>${p===0?"תּוֹר שֶׁל אוֹרִי":"תּוֹר שֶׁל אַבָּא/אִמָּא"}</div><div style="color:${XO_COL[p]}">כּוֹתְבִים ${LETTERS[X.letters[p]].name}</div>${glyphSVG([X.letters[p]],14,XO_COL[p])}`;
+  }
+}
+function xoGeo(){
+  const r=xoC.getBoundingClientRect(); const size=Math.min(r.width,r.height)-16;
+  return {r, size, cell:size/3, x0:(r.width-size)/2, y0:(r.height-size)/2};
+}
+function xoResize(){
+  const r=xoC.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2.5);
+  xoC.width=r.width*dpr; xoC.height=r.height*dpr; xx.setTransform(dpr,0,0,dpr,0,0); xoDraw();
+}
+function xoDraw(){
+  if(!X) return; const {r,size,cell,x0,y0}=xoGeo(); const g=xx;
+  g.clearRect(0,0,r.width,r.height);
+  g.fillStyle="#f6f1e4"; g.fillRect(x0,y0,size,size);
+  const drawCell=(i,strokes,color)=>{
+    const cx=x0+(i%3)*cell, cy=y0+Math.floor(i/3)*cell;
+    g.save(); g.beginPath(); g.rect(cx+4,cy+4,cell-8,cell-8); g.clip();
+    g.strokeStyle=color; g.lineCap="round"; g.lineJoin="round"; g.lineWidth=Math.max(5,cell*.045);
+    strokes.forEach(st=>{ g.beginPath(); st.forEach(([u,v],k)=>{ const x=cx+u*cell, y=cy+v*cell; k?g.lineTo(x,y):g.moveTo(x,y); }); if(st.length===1){ g.lineTo(cx+st[0][0]*cell+.1, cy+st[0][1]*cell); } g.stroke(); });
+    g.restore();
+  };
+  X.cells.forEach((c,i)=>{ if(c.owner!==null) drawCell(i,c.strokes,XO_COL[c.owner]); });
+  if(X.pend){ const cx=x0+(X.pend.i%3)*cell, cy=y0+Math.floor(X.pend.i/3)*cell; g.fillStyle="#ffcf4a33"; g.fillRect(cx,cy,cell,cell);
+    drawCell(X.pend.i, X.pend.strokes.concat(X.cur?[X.cur]:[]), XO_COL[X.turn]); }
+  g.strokeStyle="#3b4a8c"; g.lineWidth=6; g.lineCap="butt";
+  for(let k=1;k<3;k++){ g.beginPath(); g.moveTo(x0+k*cell,y0); g.lineTo(x0+k*cell,y0+size); g.stroke(); g.beginPath(); g.moveTo(x0,y0+k*cell); g.lineTo(x0+size,y0+k*cell); g.stroke(); }
+  g.lineWidth=8; g.strokeRect(x0,y0,size,size);
+  if(X.win){ const [a,,b]=X.win.line; const c=i=>[x0+(i%3+.5)*cell, y0+(Math.floor(i/3)+.5)*cell];
+    g.save(); g.strokeStyle="#e8d93a"; g.globalAlpha=.85; g.lineWidth=cell*.12; g.lineCap="round"; g.beginPath(); g.moveTo(...c(a)); g.lineTo(...c(b)); g.stroke(); g.restore(); }
+}
+function xoCellAt(x,y){ const {cell,x0,y0}=xoGeo(); const cx=Math.floor((x-x0)/cell), cy=Math.floor((y-y0)/cell); if(cx<0||cy<0||cx>2||cy>2) return -1; return cy*3+cx; }
+function xoAccepts(e){ return accepts(e); }
+xoC.addEventListener("pointerdown", e=>{
+  if(!X||X.over||!xoAccepts(e)||X.cur) return; e.preventDefault();
+  const r=xoC.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top; const i=xoCellAt(x,y);
+  if(i<0) return;
+  if(X.pend && X.pend.i!==i){ beep(200,.1); return; }   // finish the letter in the same cell
+  if(!X.pend && X.cells[i].owner!==null){ beep(200,.1); return; }
+  clearTimeout(X.timer); xoC.setPointerCapture(e.pointerId);
+  if(!X.pend) X.pend={i, strokes:[]};
+  const {cell,x0,y0}=xoGeo(); X.cur=[[ (x-x0-(i%3)*cell)/cell, (y-y0-Math.floor(i/3)*cell)/cell ]]; X.curId=e.pointerId; xoDraw();
+});
+xoC.addEventListener("pointermove", e=>{
+  if(!X||!X.cur||e.pointerId!==X.curId) return; e.preventDefault();
+  const r=xoC.getBoundingClientRect(), {cell,x0,y0}=xoGeo(), i=X.pend.i;
+  (e.getCoalescedEvents?e.getCoalescedEvents():[e]).forEach(ev=>X.cur.push([(ev.clientX-r.left-x0-(i%3)*cell)/cell, (ev.clientY-r.top-y0-Math.floor(i/3)*cell)/cell]));
+  xoDraw();
+});
+function xoUp(e){
+  if(!X||!X.cur||e.pointerId!==X.curId) return;
+  X.pend.strokes.push(X.cur); X.cur=null; xoDraw();
+  clearTimeout(X.timer); X.timer=setTimeout(xoCommit, 1200);
+}
+xoC.addEventListener("pointerup", xoUp); xoC.addEventListener("pointercancel", xoUp);
+function xoCommit(){
+  if(!X.pend) return; const {i,strokes}=X.pend; X.pend=null;
+  X.cells[i]={owner:X.turn, strokes}; X.hist.push(i); beep(X.turn?440:660,.08);
+  const line=LINES.find(l=>l.every(k=>X.cells[k].owner===X.turn));
+  if(line){
+    X.over=true; X.win={p:X.turn,line}; X.score[X.turn]++;
+    if(X.turn===0){ S.games.xo.ori++; S.gems+=3; } else { S.games.xo.parent++; S.gems+=1; }
+    logEv({ev:"xo_end", win:X.turn===0?"ori":"parent", letters:X.letters.join("")}); save(); updGems(); xoDraw(); renderXOSide();
+    if(X.turn===0) setTimeout(()=>celebrate("נִצַּחְתָּ בְּאִיקְס עִיגּוּל! +3 💎", pixSVG(fam().sprite), ()=>{}), 700);
+    else chord();
+    return;
+  }
+  if(X.cells.every(c=>c.owner!==null)){
+    X.over=true; S.games.xo.draw++; S.gems+=1; logEv({ev:"xo_end", win:"draw", letters:X.letters.join("")}); save(); updGems(); xoDraw(); renderXOSide(); chord(); return;
+  }
+  X.turn=1-X.turn; xoDraw(); renderXOSide();
+}
+document.getElementById("xoUndo").onclick=()=>{
+  if(!X) return; clearTimeout(X.timer);
+  if(X.pend){ X.pend=null; X.cur=null; }
+  else if(X.hist.length && !X.over){ const i=X.hist.pop(); X.turn=X.cells[i].owner; X.cells[i]={owner:null,strokes:[]}; }
+  xoDraw(); renderXOSide();
+};
+document.getElementById("xoNew").onclick=()=>{ newXOGame(); renderXOSide(); xoDraw(); };
+document.getElementById("xoBack").onclick=goHome;
+
+/* ---------- room: every family gets its place in the cave ---------- */
 function drawRoom(){
   updGems();
   const c=document.getElementById("roomCanvas"), r=c.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2);
   c.width=r.width*dpr; c.height=r.height*dpr; const g=c.getContext("2d"); g.setTransform(dpr,0,0,dpr,0,0);
   const W0=r.width, H0=r.height, B=Math.round(Math.min(W0,H0)/14);
-  // stone blocks
-  for(let y=0;y<H0;y+=B) for(let x=0;x<W0;x+=B){ const n=(Math.sin(x*12.9898+y*78.233)*43758.5453)%1; g.fillStyle= n>0.6?"#4a4358":n>0.2?"#3d374a":"#332e3f"; g.fillRect(x,y,B,B); g.fillStyle="#0002"; g.fillRect(x,y+B-3,B,3); }
-  // cave opening (lit area)
-  const lit = ORDER.filter(ch=>L(ch).done).length;
-  g.fillStyle=`rgba(255,200,120,${0.04+lit*0.04})`; g.fillRect(B,B*2,W0-2*B,H0-3*B);
-  // ceiling ledge
-  g.fillStyle="#262131"; g.fillRect(0,B*2-6,W0,8);
-  // bats per letter
-  const slotW=(W0-2*B)/ORDER.length;
-  ORDER.forEach((ch,i)=>{
-    const st=L(ch); const cx=W0-B-slotW*(i+.5); const px=Math.max(4,B/5);
-    if(st.done){ drawPix(g,BAT,cx-7*px,B*2,px); drawPix(g,TORCH,cx+slotW*.3,B*2+B*1.2,px*.8); }
-    else drawPix(g,BAT,cx-7*px,B*2,px,.18);
-    g.fillStyle=st.done?"#fff":"#fff5"; g.font=`800 ${Math.round(B*.9)}px Rubik`; g.textAlign="center"; g.fillText(st.done?ch:"?", cx, B*2+px*11+B*1.1);
+  for(let y=0;y<H0;y+=B) for(let x=0;x<W0;x+=B){ const n=Math.abs(Math.sin(x*12.9898+y*78.233)*43758.5453)%1; g.fillStyle= n>0.6?"#4a4358":n>0.2?"#3d374a":"#332e3f"; g.fillRect(x,y,B,B); g.fillStyle="#0002"; g.fillRect(x,y+B-3,B,3); }
+  const allLetters=FAMILIES.flatMap(f=>f.order), lit=allLetters.filter(ch=>L(ch).done).length;
+  g.fillStyle=`rgba(255,200,120,${Math.min(.5,0.04+lit*0.03)})`; g.fillRect(B,B*1.5,W0-2*B,H0-2.5*B);
+  const label=(txt,on,x,y,size)=>{ g.fillStyle=on?"#fff":"#fff5"; g.font=`800 ${Math.round(size)}px Rubik`; g.textAlign="center"; g.fillText(on?txt:"?", x, y); };
+  FAMILIES.forEach(f=>{
+    const ord=f.order, slotW=(W0-2*B)/ord.length;
+    if(f.room==="ceiling"){
+      const y0=B*1.5; g.fillStyle="#262131"; g.fillRect(0,y0-6,W0,8);
+      ord.forEach((ch,i)=>{ const done=L(ch).done, cx=W0-B-slotW*(i+.5), px=Math.max(3,B/6);
+        drawPix(g,f.sprite,cx-7*px,y0,px,done?1:.18);
+        if(done) drawPix(g,TORCH,cx+slotW*.3,y0+B*1.1,px*.7);
+        label(ch,done,cx,y0+px*11+B*.9,B*.8); });
+    } else { // pond in the middle of the cave
+      const yP=H0*.56; g.fillStyle="#1e4f63"; g.fillRect(B,yP,W0-2*B,B*.8); g.fillStyle="#2c6d85"; for(let x=B;x<W0-B;x+=B*.8) g.fillRect(x,yP,B*.4,4);
+      ord.forEach((ch,i)=>{ const done=L(ch).done, cx=W0-B-slotW*(i+.5), px=Math.max(3,B/7);
+        drawPix(g,f.sprite,cx-6*px,yP-9*px+px*2,px,done?1:.18);
+        label(ch,done,cx,yP+B*.65,B*.6); });
+    }
   });
-  // chests for words on the floor
-  const fy=H0-B*2.4; g.fillStyle="#2a2433"; g.fillRect(0,H0-B,W0,B);
-  const cw=(W0-2*B)/WORDS.length;
-  WORDS.forEach((w,i)=>{ const done=W(w.id).done; const cx=W0-B-cw*(i+.5); const px=Math.max(4,B/7);
+  // treasure chests on the floor: one per word of every family
+  const words=FAMILIES.flatMap(f=>f.words);
+  g.fillStyle="#2a2433"; g.fillRect(0,H0-B,W0,B);
+  const cw=(W0-2*B)/words.length;
+  words.forEach((w,i)=>{ const done=W(w.id).done; const cx=W0-B-cw*(i+.5); const px=Math.max(3,Math.min(B/7,cw/13));
     drawPix(g,CHEST,cx-5*px,H0-B-8*px,px, done?1:.2);
-    g.fillStyle=done?"#ffcf4a":"#fff4"; g.font=`700 ${Math.round(B*.5)}px Rubik`; g.textAlign="center"; g.fillText(done?w.show:"🔒", cx, H0-B-9*px-8); });
-  // emerald pile
-  const pile=Math.min(S.gems,60); const px=Math.max(2,B/9);
-  for(let i=0;i<pile;i++){ const col=i%12, row=Math.floor(i/12); drawPix(g,EMERALD, B*1.2+col*px*7 + (row%2)*px*3, fy-row*px*6 - B*.6, px); }
-  g.fillStyle="#fff"; g.font=`800 ${Math.round(B*.6)}px Rubik`; g.textAlign="left"; g.fillText(`${S.gems} אֶמֶרַלְדִּים`, B*1.2, fy-Math.ceil(pile/12)*px*6-B*.9);
+    g.fillStyle=done?"#ffcf4a":"#fff4"; g.font=`700 ${Math.round(Math.min(B*.45,cw*.32))}px Rubik`; g.textAlign="center"; g.fillText(done?w.show:"🔒", cx, H0-B-9*px-6); });
+  // emerald pile above the chests
+  const pile=Math.min(S.gems,36); const px=Math.max(2,B/10), fy=H0-B*3.1;
+  for(let i=0;i<pile;i++){ const col=i%18, row=Math.floor(i/18); drawPix(g,EMERALD, B*1.2+col*px*7 + (row%2)*px*3, fy-row*px*6, px); }
+  g.fillStyle="#fff"; g.font=`800 ${Math.round(B*.55)}px Rubik`; g.textAlign="left"; g.fillText(`${S.gems} אֶמֶרַלְדִּים`, B*1.2, fy-Math.ceil(pile/18)*px*6+px*2-6);
 }
 
 /* ---------- nav / parent ---------- */
-function goHome(){ stopAnim(); P=null; show("home"); renderHome(); }
-document.getElementById("backHome").onclick=goHome;
+function goHome(){ stopAnim(); P=null; if(X) clearTimeout(X.timer); show("home"); renderHome(); }
+document.getElementById("backHome").onclick=()=>{ if(P&&P.kind==="pic"){ P=null; stopAnim(); show("pic"); renderPic(); return; } goHome(); };
 document.getElementById("roomBack").onclick=goHome;
 document.getElementById("toRoom").onclick=()=>{ show("room"); requestAnimationFrame(drawRoom); };
 document.getElementById("fsBtn").onclick=()=>{ const d=document.documentElement; (document.fullscreenElement? document.exitFullscreen() : d.requestFullscreen&&d.requestFullscreen()).catch?.(()=>{}); };
@@ -590,7 +997,7 @@ document.getElementById("pClose").onclick=()=>{ S.unlockAll=document.getElementB
 document.getElementById("pReset").onclick=()=>{ if(confirm("לאפס את כל ההתקדמות בכתיבה?")){ const m=S.mode; S=blank(); S.mode=m; save(); pp.classList.remove("on"); renderHome(); } };
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 // expose for testing
-window.__W={S, startLetter, startWord, get P(){return P;}, get geo(){return geo;}, renderHome};
+window.__W={get S(){return S;}, FAMILIES, LETTERS, startLetter, startWord, startPicGame, startXO, get P(){return P;}, get geo(){return geo;}, get X(){return X;}, get G(){return G;}, renderHome, xoCommit};
 renderHome();
 </script>
 </body>
