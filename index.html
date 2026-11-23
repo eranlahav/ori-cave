@@ -58,6 +58,11 @@ button{font-family:inherit;cursor:pointer;border:0}
 .card.game{background:#5a4326}
 .card.game .glyph{display:flex;align-items:center;justify-content:center;font-size:70px;color:var(--ink)}
 .card .ttl{font-size:20px;font-weight:800;text-shadow:2px 2px 0 #000}
+/* families with more than 6 letters: smaller letter cards so one row still fits */
+#home .grid.many{gap:12px}
+.grid.many .card:not(.words):not(.game){width:140px;height:184px}
+.grid.many .card:not(.words):not(.game) .glyph{width:100px;height:100px}
+.grid.many .card:not(.words):not(.game) .mascot{width:60px;height:48px}
 .rowbreak{flex-basis:100%;height:0}
 /* practice */
 #practice .stagebar{display:flex;gap:6px;align-items:center}
@@ -228,7 +233,7 @@ button{font-family:inherit;cursor:pointer;border:0}
    A letter = width + name + strokes (each stroke is a polyline, drawn in order,
    starting at its first point). Every game reads only from this config.
    ===================================================================== */
-const PAL = {k:"#111",d:"#2b2433",g:"#4b4256",G:"#6d6380",w:"#fff",r:"#e2453c",e:"#3ad17a",E:"#1f9d55",l:"#b6ffd2",y:"#ffcf4a",o:"#f08a24",b:"#7a4a24",B:"#5a3418",s:"#9a9a9a",S:"#6a6a6a",f:"#57b947",F:"#2f7a2a",p:"#b9e88a"};
+const PAL = {k:"#111",d:"#2b2433",g:"#4b4256",G:"#6d6380",w:"#fff",r:"#e2453c",e:"#3ad17a",E:"#1f9d55",l:"#b6ffd2",y:"#ffcf4a",o:"#f08a24",b:"#7a4a24",B:"#5a3418",s:"#9a9a9a",S:"#6a6a6a",f:"#57b947",F:"#2f7a2a",p:"#b9e88a",V:"#6a2f86",m:"#d9529c",v:"#f7b6e0"};
 const BAT = [ // hanging upside down, feet up
   "....kk..kk....",
   "....kgkkgk....",
@@ -271,8 +276,36 @@ const FROG_JUMP = [
   "kFk......kFk",
   "kk........kk"];
 
+const BUTTERFLY = [ // our own blocky butterfly, wings open
+  "...k.....k...",
+  "....k...k....",
+  "VVV..kkk..VVV",
+  "VmmV.kkk.VmmV",
+  "VmvmVVkVVmvmV",
+  "VmmmmVkVmmmmV",
+  ".VmmmVkVmmmV.",
+  "..VVVVkVVVV..",
+  ".VmmVVkVVmmV.",
+  ".VmvVVkVVvmV.",
+  "..VVV.k.VVV..",
+  "......k......"];
+const BUTTERFLY_FLY = [ // wings half closed
+  "...k.....k...",
+  "....k...k....",
+  "...V.kkk.V...",
+  "..VmVkkkVmV..",
+  ".VmvmVkVmvmV.",
+  ".VmmmVkVmmmV.",
+  "..VmmVkVmmV..",
+  "...VVVkVVV...",
+  "...VmVkVmV...",
+  "....VVkVV....",
+  "......k......"];
+
 function arcPts(cx,cy,rx,ry,a0,a1,n=7){ const o=[]; for(let i=1;i<=n;i++){ const a=(a0+(a1-a0)*i/n)*Math.PI/180; o.push([Math.round((cx+rx*Math.cos(a))*10)/10, Math.round((cy+ry*Math.sin(a))*10)/10]); } return o; }
 // "frog jump": start on the ceiling at the left, go right, round the corner, down the right side to yEnd
+// an arc that includes its own first point
+function arcFrom(cx,cy,rx,ry,a0,a1,n=10){ const a=a0*Math.PI/180; return [[Math.round((cx+rx*Math.cos(a))*10)/10, Math.round((cy+ry*Math.sin(a))*10)/10], ...arcPts(cx,cy,rx,ry,a0,a1,n)]; }
 function topArc(x0, xr, yEnd=100){ const rx=Math.min(38,(xr-x0)*.55), ry=44; return [[x0,0],[xr-rx,0], ...arcPts(xr-rx,ry,rx,ry,-90,0,9), [xr,yEnd]]; }
 
 const FAMILIES = [
@@ -334,6 +367,43 @@ const FAMILIES = [
       {w:"חָתוּל",e:"🐱"},{w:"חָלָב",e:"🥛"},{w:"חַלּוֹן",e:"🪟"},
       {w:"תַּפּוּחַ",e:"🍎"},{w:"תּוּת",e:"🍓"},{w:"תַּרְנְגוֹל",e:"🐓"},{w:"תִּינוֹק",e:"👶"},
       {w:"בָּנָנָה",e:"🍌"},{w:"בַּיִת",e:"🏠"},{w:"בַּרְוָז",e:"🦆"},{w:"בָּלוֹן",e:"🎈"},
+    ],
+  },
+  {
+    id:"butterflies", name:"קְבוּצַת הַפַּרְפָּרִים", color:"#a0479a",
+    sprite:BUTTERFLY, spriteMove:BUTTERFLY_FLY, perch:"sit", room:"air",
+    showMe:"🦋 תַּרְאֶה לִי", watchMsg:"הַפַּרְפַּר מַרְאֶה אֶת הַדֶּרֶךְ",
+    newLetter:ch=>`פַּרְפַּר חָדָשׁ עָף לַמְּעָרָה! ${ch}`,
+    order:["ס","כ","ז","ם","פ","צ","ד","ך"],
+    // workbook pp.35–39: every butterfly letter starts at the top LEFT (by the butterfly's body)
+    // and goes right first, clockwise. ס = the wing on p.37. ז ם פ צ ד traced from p.39.
+    // כ and ך appear only in the p.35 grid, so their start point follows the same rule (check with the teacher).
+    letters:{
+      "ס": {w:92, name:"סָמֶךְ", strokes:[arcFrom(46,50,44,50,-140,220,26)]},
+      "כ": {w:86, name:"כָּף",  strokes:[[[8,10],[20,2],[40,0], ...arcPts(42,50,40,50,-88,90,14), [24,99],[8,94]]]},
+      "ז": {w:84, name:"זַיִן", strokes:[[[24,0],[4,22],[24,21], ...arcFrom(44,61,38,39,-90,90,12), [6,100]]]},
+      "ם": {w:100,name:"מֵם סוֹפִית", strokes:[[[20,4],[36,0], ...arcFrom(58,50,40,50,-90,180,18), [18,14],[14,4],[8,2],[5,10],[4,100]]]},
+      "פ": {w:96, name:"פֵּא",  strokes:[[[8,12], ...arcFrom(52,52,44,48,-118,160,18), [12,56],[17,49],[26,44],[38,42],[50,45],[58,52],[60,62]]]},
+      "צ": {w:82, name:"צָדִי", strokes:[[[6,20],[16,8],[30,1],[46,0],[60,5],[69,15],[71,26],[66,38],[55,47],[40,51],[34,52],[44,53],[58,57],[70,65],[76,77],[73,89],[63,97],[48,100],[32,98],[18,91],[10,84]]]},
+      "ד": {w:84, name:"דָּלֶת", strokes:[[[4,42],[3,26],[8,12],[18,3],[32,0],[48,0],[62,3],[73,10],[79,22],[79,36],[74,48],[64,58],[52,66],[40,69],[31,65],[29,56],[36,50],[48,49],[60,53],[68,62],[71,74],[71,100]]]},
+      "ך": {w:84, name:"כָּף סוֹפִית", strokes:[[[8,10],[22,2],[40,0], ...arcPts(44,34,36,34,-86,90,12), [26,67],[14,62],[14,150]]]},
+    },
+    words:[
+      {id:"p_ken",  show:"כֵּן",   letters:["כ","ן"]},
+      {id:"p_ze",   show:"זֶה",   letters:["ז","ה"]},
+      {id:"p_sus",  show:"סוּס",  letters:["ס","ו","ס"]},
+      {id:"p_pe",   show:"פֶּה",   letters:["פ","ה"]},
+      {id:"p_yam",  show:"יָם",   letters:["י","ם"]},
+      {id:"p_tsav", show:"צָב",   letters:["צ","ב"]},
+      {id:"p_derech",show:"דֶּרֶךְ", letters:["ד","ר","ך"]},
+    ],
+    pictures:[
+      {w:"סוּס",e:"🐴"},{w:"סַבּוֹן",e:"🧼"},{w:"סֻכָּרִיָּה",e:"🍬"},{w:"סִירָה",e:"⛵"},
+      {w:"כֶּלֶב",e:"🐶"},{w:"כַּדּוּר",e:"⚽"},{w:"כּוֹבַע",e:"🧢"},{w:"כּוֹכָב",e:"⭐"},{w:"כֶּתֶר",e:"👑"},
+      {w:"זֶבְּרָה",e:"🦓"},{w:"זְאֵב",e:"🐺"},{w:"זַיִת",e:"🫒"},
+      {w:"פִּיל",e:"🐘"},{w:"פִּיצָה",e:"🍕"},{w:"פַּרְפַּר",e:"🦋"},{w:"פִּינְגְּוִין",e:"🐧"},
+      {w:"צָב",e:"🐢"},{w:"צִפּוֹר",e:"🐦"},{w:"צְפַרְדֵּעַ",e:"🐸"},
+      {w:"דָּג",e:"🐟"},{w:"דֻּבִּי",e:"🧸"},{w:"דְּבוֹרָה",e:"🐝"},{w:"דֶּלֶת",e:"🚪"},{w:"דּוֹלְפִין",e:"🐬"},
     ],
   },
 ];
@@ -473,7 +543,7 @@ function renderFams(){
 }
 function renderHome(){
   updGems(); setModeSeg(); renderFams();
-  const F=fam(), g=document.getElementById("grid"); g.innerHTML="";
+  const F=fam(), g=document.getElementById("grid"); g.innerHTML=""; g.classList.toggle("many", F.order.length>6);
   F.order.forEach((ch,i)=>{
     const st=L(ch), un=letterUnlocked(i);
     const c=document.createElement("button"); c.className="card"+(st.done?" done":"")+(un?"":" locked");
@@ -965,6 +1035,11 @@ function drawRoom(){
         drawPix(g,f.sprite,cx-7*px,y0,px,done?1:.18);
         if(done) drawPix(g,TORCH,cx+slotW*.3,y0+B*1.1,px*.7);
         label(ch,done,cx,y0+px*11+B*.9,B*.8); });
+    } else if(f.room==="air"){ // butterflies flutter between the bats and the pond
+      const top=B*4.5, bot=H0*.56-B*1.15, px=Math.max(2,Math.min(B/8,(bot-top-B*.7)/12.5));
+      ord.forEach((ch,i)=>{ const done=L(ch).done, cx=W0-B-slotW*(i+.5);
+        drawPix(g,done?f.sprite:f.spriteMove,cx-6.5*px,top,px,done?1:.18);
+        label(ch,done,cx,top+px*12+B*.5,B*.5); });
     } else { // pond in the middle of the cave
       const yP=H0*.56; g.fillStyle="#1e4f63"; g.fillRect(B,yP,W0-2*B,B*.8); g.fillStyle="#2c6d85"; for(let x=B;x<W0-B;x+=B*.8) g.fillRect(x,yP,B*.4,4);
       ord.forEach((ch,i)=>{ const done=L(ch).done, cx=W0-B-slotW*(i+.5), px=Math.max(3,B/7);
